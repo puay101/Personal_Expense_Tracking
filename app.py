@@ -22,12 +22,14 @@ elif selected == "This Month":
 filtered_df = df[
     (df['Submission time'].dt.date >= start_date)
     ]
+bar_prepare = filtered_df.groupby("Category")["Amounts"].sum().sort_values(ascending=False).reset_index()
 fig = px.bar(
-    filtered_df,
-    y="Category",
-    x="Amounts",
+    bar_prepare,
+    x="Category",
+    y="Amounts",
+    title = f"{selected}'s Spending",
     color="Category",
-    title = f"{selected}'s Spending"
+    text_auto = True
 )
 
 st.plotly_chart(fig)
@@ -36,5 +38,7 @@ st.divider()
 line_chart = filtered_df.set_index("Submission time")["Amounts"]
 st.line_chart(line_chart)
 st.divider()
-
+executive_summary = filtered_df.groupby("Category").Amounts.sum().sort_values(ascending=False)
+st.write(executive_summary)
+st.divider()
 st.write(df[["Submission time","Category","Amounts","Note"]].tail(5))
