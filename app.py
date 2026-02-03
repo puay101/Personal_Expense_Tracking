@@ -5,6 +5,7 @@ from datetime import datetime, timedelta
 df = pd.read_csv("https://docs.google.com/spreadsheets/d/1-Ga1e6arSzIkzLd0-aMe2o0NPhjVj0xpUCOeoKAO_Qk/export?format=csv")
 today_dt = datetime.now()
 df["Submission time"] = pd.to_datetime(df["Submission time"])
+df['Submission time'] = df['Submission time'] + pd.Timedelta(hours=7)
 df["MonthYear"] = df["Submission time"].dt.strftime("%b-%Y")
 df["Date"] = df["Submission time"].dt.date
 bar_plot = df.groupby("Category")["Amounts"].sum()
