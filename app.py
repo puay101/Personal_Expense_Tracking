@@ -32,7 +32,8 @@ fig = px.bar(
     color="Category",
     text_auto = True
 )
-
+st.metric(label=f"{selected} Spend", value= f"{filtered_df["Amounts"].sum():.2f} THB")
+st.divider()
 st.plotly_chart(fig)
 
 st.divider()
@@ -40,6 +41,6 @@ line_chart = filtered_df.set_index("Submission time")["Amounts"]
 st.line_chart(line_chart)
 st.divider()
 executive_summary = filtered_df.groupby("Category").Amounts.sum().sort_values(ascending=False)
-st.write(executive_summary)
+st.table(executive_summary)
 st.divider()
-st.write(df[["Submission time","Category","Amounts","Note"]].tail(5))
+st.table(df[["Submission time","Category","Amounts","Note"]].tail(5))
