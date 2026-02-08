@@ -40,7 +40,9 @@ st.divider()
 line_chart = filtered_df.set_index("Submission time")["Amounts"]
 st.line_chart(line_chart)
 st.divider()
-executive_summary = filtered_df.groupby("Category").Amounts.describe().sort_values(ascending=False,by="mean").round()
-st.table(executive_summary)
+summary = df.groupby("Category").agg({
+    "Amounts":["sum","mean","max"]
+}).round(0)
+st.table(summary)
 st.divider()
 st.table(df[["Submission time","Category","Amounts","Note"]].tail(5))
