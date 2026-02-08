@@ -41,6 +41,6 @@ line_chart = filtered_df.set_index("Submission time")["Amounts"]
 st.line_chart(line_chart)
 st.divider()
 executive_summary = filtered_df.groupby("Category").Amounts.sum().sort_values(ascending=False)
-st.table(executive_summary)
+st.table(executive_summary.describe())
 st.divider()
 st.table(df[["Submission time","Category","Amounts","Note"]].tail(5))
